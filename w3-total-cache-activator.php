@@ -4,9 +4,9 @@
  * Plugin Name:       W3 Total Cache Activator
  * Plugin URI:        https://github.com/wp-activators/w3-total-cache-activator
  * Description:       W3 Total Cache Plugin Activator
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 3.1.0
- * Requires PHP:      7.1
+ * Requires PHP:      7.2
  * Author:            mohamedhk2
  * Author URI:        https://github.com/mohamedhk2
  **/
