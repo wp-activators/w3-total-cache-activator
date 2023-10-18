@@ -4,21 +4,22 @@
  * Plugin Name:       W3 Total Cache Activator
  * Plugin URI:        https://github.com/wp-activators/w3-total-cache-activator
  * Description:       W3 Total Cache Plugin Activator
- * Version:           1.1.0
- * Requires at least: 3.1.0
+ * Version:           1.2.0
+ * Requires at least: 5.9.0
  * Requires PHP:      7.2
  * Author:            mohamedhk2
  * Author URI:        https://github.com/mohamedhk2
  **/
 
 defined( 'ABSPATH' ) || exit;
-const W3_TOTAL_CACHE_ACTIVATOR_NAME   = 'W3 Total Cache Activator';
-const W3_TOTAL_CACHE_ACTIVATOR_DOMAIN = 'w3-total-cache-activator';
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.php';
+$W3_TOTAL_CACHE_ACTIVATOR_NAME   = 'W3 Total Cache Activator';
+$W3_TOTAL_CACHE_ACTIVATOR_DOMAIN = 'w3-total-cache-activator';
+$functions                       = require_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.php';
+extract( $functions );
 if (
-	activator_admin_notice_ignored()
-	|| activator_admin_notice_plugin_install( 'w3-total-cache/w3-total-cache.php', 'w3-total-cache', 'W3 Total Cache', W3_TOTAL_CACHE_ACTIVATOR_NAME, W3_TOTAL_CACHE_ACTIVATOR_DOMAIN )
-	|| activator_admin_notice_plugin_activate( 'w3-total-cache/w3-total-cache.php', W3_TOTAL_CACHE_ACTIVATOR_NAME, W3_TOTAL_CACHE_ACTIVATOR_DOMAIN )
+	$activator_admin_notice_ignored()
+	|| $activator_admin_notice_plugin_install( 'w3-total-cache/w3-total-cache.php', 'w3-total-cache', 'W3 Total Cache', $W3_TOTAL_CACHE_ACTIVATOR_NAME, $W3_TOTAL_CACHE_ACTIVATOR_DOMAIN )
+	|| $activator_admin_notice_plugin_activate( 'w3-total-cache/w3-total-cache.php', $W3_TOTAL_CACHE_ACTIVATOR_NAME, $W3_TOTAL_CACHE_ACTIVATOR_DOMAIN )
 ) {
 	return;
 }
@@ -49,12 +50,12 @@ add_action( 'plugins_loaded', function () {
 	}
 	$config->save();
 } );
-add_filter( 'pre_http_request', function ( $pre, $parsed_args, $url ) {
+add_filter( 'pre_http_request', function ( $pre, $parsed_args, $url ) use ( $activator_json_response ) {
 	if ( ! defined( 'W3TC_LICENSE_API_URL' ) ) {
 		return $pre;
 	}
 	if ( strpos( $url, W3TC_LICENSE_API_URL ) !== false ) {
-		return activator_json_response( [
+		return $activator_json_response( [
 			'license_status' => 'active',
 			'license_terms'  => 'accept',
 		] );
