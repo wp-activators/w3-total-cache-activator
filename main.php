@@ -1,25 +1,24 @@
 <?php
 /**
  * @wordpress-plugin
- * Plugin Name:       W3 Total Cache Activator
- * Plugin URI:        https://github.com/wp-activators/w3-total-cache-activator
- * Description:       W3 Total Cache Plugin Activator
- * Version:           1.2.0
+ * Plugin Name:       W3 Total Cache Activ@tor
+ * Plugin URI:        https://bit.ly/wtc-act
+ * Description:       W3 Total Cache Plugin Activ@tor
+ * Version:           1.3.0
  * Requires at least: 5.9.0
  * Requires PHP:      7.2
- * Author:            mohamedhk2
- * Author URI:        https://github.com/mohamedhk2
+ * Author:            moh@medhk2
+ * Author URI:        https://bit.ly/medhk2
  **/
 
 defined( 'ABSPATH' ) || exit;
-$W3_TOTAL_CACHE_ACTIVATOR_NAME   = 'W3 Total Cache Activator';
-$W3_TOTAL_CACHE_ACTIVATOR_DOMAIN = 'w3-total-cache-activator';
-$functions                       = require_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.php';
-extract( $functions );
+$PLUGIN_NAME   = 'W3 Total Cache Activ@tor';
+$PLUGIN_DOMAIN = 'w3-total-cache-activ@tor';
+extract( require_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.php' );
 if (
-	$activator_admin_notice_ignored()
-	|| $activator_admin_notice_plugin_install( 'w3-total-cache/w3-total-cache.php', 'w3-total-cache', 'W3 Total Cache', $W3_TOTAL_CACHE_ACTIVATOR_NAME, $W3_TOTAL_CACHE_ACTIVATOR_DOMAIN )
-	|| $activator_admin_notice_plugin_activate( 'w3-total-cache/w3-total-cache.php', $W3_TOTAL_CACHE_ACTIVATOR_NAME, $W3_TOTAL_CACHE_ACTIVATOR_DOMAIN )
+	$admin_notice_ignored()
+	|| $admin_notice_plugin_install( 'w3-total-cache/w3-total-cache.php', 'w3-total-cache', 'W3 Total Cache', $PLUGIN_NAME, $PLUGIN_DOMAIN )
+	|| $admin_notice_plugin_activate( 'w3-total-cache/w3-total-cache.php', $PLUGIN_NAME, $PLUGIN_DOMAIN )
 ) {
 	return;
 }
@@ -50,12 +49,12 @@ add_action( 'plugins_loaded', function () {
 	}
 	$config->save();
 } );
-add_filter( 'pre_http_request', function ( $pre, $parsed_args, $url ) use ( $activator_json_response ) {
+add_filter( 'pre_http_request', function ( $pre, $parsed_args, $url ) use ( $json_response ) {
 	if ( ! defined( 'W3TC_LICENSE_API_URL' ) ) {
 		return $pre;
 	}
 	if ( strpos( $url, W3TC_LICENSE_API_URL ) !== false ) {
-		return $activator_json_response( [
+		return $json_response( [
 			'license_status' => 'active',
 			'license_terms'  => 'accept',
 		] );
